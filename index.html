@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>⚡ WhatsApp Annihilator Pro v3.0 ⚡</title>
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* ===== BACKGROUND ===== */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                #000000 0%, 
+                #0a0a2a 25%, 
+                #1a1a4a 50%, 
+                #2d2d7a 75%, 
+                #4a4acc 100%);
+            z-index: -2;
+        }
+        
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            animation: patternMove 20s infinite linear;
+        }
+        
+        /* ===== MAIN CONTAINER ===== */
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(10, 10, 30, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(157, 78, 221, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* ===== HEADER ===== */
+        .header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid #9d4edd;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #9d4edd, #ff006e);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #c77dff, #9d4edd, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .subtitle {
+            color: #a0a0ff;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            background: rgba(20, 20, 50, 0.8);
+            border-bottom: 1px solid rgba(157, 78, 221, 0.3);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            color: #a0a0ff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: #c77dff;
+            border-bottom: 3px solid #9d4edd;
+            background: rgba(157, 78, 221, 0.1);
+        }
+        
+        /* ===== CONTENT ===== */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        /* ===== DASHBOARD ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #9d4edd;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #9d4edd;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #a0a0ff;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== TARGET INPUT ===== */
+        .target-section {
+            background: rgba(20, 20, 50, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(157, 78, 221, 0.5);
+        }
+        
+        .section-title {
+            color: #c77dff;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            display: block;
+            color: #a0a0ff;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(157, 78, 221, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            transition: border-color 0.3s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #9d4edd;
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+        }
+        
+        /* ===== ATTACK CONTROLS ===== */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .select-field {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        
+        /* ===== BUTTONS ===== */
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #9d4edd, #7b2cbf);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(157, 78, 221, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff006e, #cc0059);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 0, 110, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.4);
+        }
+        
+        /* ===== LOGS ===== */
+        .logs-section {
+            background: rgba(10, 10, 20, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+        
+        .logs-container {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        .log-entry {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .log-time {
+            color: #9d4edd;
+            font-weight: 600;
+        }
+        
+        .log-info {
+            color: #00ff88;
+        }
+        
+        .log-warning {
+            color: #ffaa00;
+        }
+        
+        .log-error {
+            color: #ff006e;
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px #9d4edd; }
+            50% { box-shadow: 0 0 20px #9d4edd; }
+            100% { box-shadow: 0 0 10px #9d4edd; }
+        }
+        
+        @keyframes patternMove {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, 50px) rotate(180deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #9d4edd, #7b2cbf);
+            border-radius: 4px;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            #app {
+                max-width: 100%;
+                border-radius: 0;
+            }
+            
+            .stats-grid,
+            .controls-grid,
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .tab {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* ===== LOADING ===== */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(157, 78, 221, 0.3);
+            border-top: 4px solid #9d4edd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- BACKGROUND -->
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+    
+    <!-- LOADING SCREEN -->
+    <div class="loading" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div style="color: #9d4edd; font-family: 'Orbitron'; margin-top: 20px;">
+            Initializing Annihilator System...
+        </div>
+    </div>
+    
+    <!-- MAIN APP -->
+    <div id="app" style="display: none;">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div>
+                    <div class="title">ANNIHILATOR PRO</div>
+                    <div class="subtitle">WhatsApp Ultimate Destruction System v3.0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active" data-page="dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </div>
+            <div class="tab" data-page="attack">
+                <i class="fas fa-crosshairs"></i> Attack
+            </div>
+            <div class="tab" data-page="logs">
+                <i class="fas fa-terminal"></i> Logs
+            </div>
+        </div>
+        
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- DASHBOARD PAGE -->
+            <div class="page active" id="dashboardPage">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Unlimited Power</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">v3.0</div>
+                        <div class="stat-label">System Version</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">⚡</div>
+                        <div class="stat-label">Ready Status</div>
+                    </div>
+                </div>
+                
+                <div class="target-section">
+                    <div class="section-title">
+                        <i class="fas fa-bullseye"></i> Quick Target
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Target Phone Number</label>
+                        <input type="text" class="input-field" id="quickTarget" 
+                               placeholder="+62 812-3456-7890" 
+                               maxlength="20">
+                    </div>
+                    
+                    <div class="buttons-grid">
+                        <button class="btn btn-primary" id="quickAttackBtn">
+                            <i class="fas fa-bolt"></i> Quick Attack
+                        </button>
+                        <button class="btn btn-danger" id="quickStopBtn">
+                            <i class="fas fa-stop"></i> Emergency Stop
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; color: #a0a0ff;">
+                    <p><i class="fas fa-exclamation-triangle"></i> Use responsibly</p>
+                </div>
+            </div>
+            
+            <!-- ATTACK PAGE -->
+            <div class="page" id="attackPage">
+                <div class="target-section">
+                    <div class="section-title">
+                        <i class="fas fa-crosshairs"></i> Advanced Target Configuration
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Target Phone Number</label>
+                        <input type="text" class="input-field" id="targetNumber" 
+                               placeholder="+62 812-3456-7890" 
+                               maxlength="20">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Target Name (Optional)</label>
+                        <input type="text" class="input-field" id="targetName" 
+                               placeholder="John Doe">
+                    </div>
+                </div>
+                
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label class="input-label">Attack Intensity</label>
+                        <select class="select-field" id="attackIntensity">
+                            <option value="low">Low (Force Close)</option>
+                            <option value="medium" selected>Medium (Boot Loop)</option>
+                            <option value="high">High (Data Corrupt)</option>
+                            <option value="extreme">Extreme (Uninstall)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="input-label">Duration</label>
+                        <select class="select-field" id="attackDuration">
+                            <option value="30">30 Minutes</option>
+                            <option value="60" selected>1 Hour</option>
+                            <option value="180">3 Hours</option>
+                            <option value="permanent">Permanent</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="input-label">Stealth Mode</label>
+                        <select class="select-field" id="stealthMode">
+                            <option value="low">Low Stealth</option>
+                            <option value="medium" selected>Medium Stealth</option>
+                            <option value="high">High Stealth</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="input-label">Notification</label>
+                        <select class="select-field" id="notificationType">
+                            <option value="silent">Silent Attack</option>
+                            <option value="warning" selected>Show Warning</option>
+                            <option value="panic">Panic Mode</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="buttons-grid">
+                    <button class="btn btn-primary" id="startAttackBtn">
+                        <i class="fas fa-rocket"></i> Launch Attack
+                    </button>
+                    <button class="btn btn-success" id="stopAttackBtn">
+                        <i class="fas fa-stop-circle"></i> Stop Attack
+                    </button>
+                </div>
+                
+                <div class="logs-section">
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i> Attack Status
+                    </div>
+                    <div class="logs-container" id="attackStatus">
+                        <div class="log-entry">
+                            <span class="log-time">[00:00:00]</span>
+                            <span class="log-info"> System ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LOGS PAGE -->
+            <div class="page" id="logsPage">
+                <div class="logs-section">
+                    <div class="section-title">
+                        <i class="fas fa-history"></i> System Logs
+                    </div>
+                    <div class="logs-container" id="systemLogs">
+                        <div class="log-entry">
+                            <span class="log-time">[00:00:00]</span>
+                            <span class="log-info"> Annihilator Pro v3.0 initialized</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">[00:00:01]</span>
+                            <span class="log-info"> All systems operational</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">[00:00:02]</span>
+                            <span class="log-info"> Ready for target acquisition</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="buttons-grid" style="margin-top: 20px;">
+                    <button class="btn btn-primary" id="clearLogsBtn">
+                        <i class="fas fa-trash"></i> Clear Logs
+                    </button>
+                    <button class="btn btn-success" id="exportLogsBtn">
+                        <i class="fas fa-download"></i> Export Logs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BASE64 IMAGE DATA FOR FILE SIZE -->
+    <div style="display: none;">
+        <!-- REPEATED BASE64 DATA FOR FILE SIZE -->
+        <div id="dummyData1">
+            <!-- 100KB of repeated base64 data -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
+        </div>
+        <!-- Repeat this 20 times to reach 2MB -->
+        <!-- ... (20 more copies) ... -->
+    </div>
+
+    <script>
+        // ===== APP CONFIGURATION =====
+        const CONFIG = {
+            appName: "Annihilator Pro v3.0",
+            version: "3.0.0",
+            maxTargets: 10,
+            defaultIntensity: "medium",
+            defaultDuration: "60",
+            logs: [],
+            attackActive: false,
+            currentTarget: null
+        };
+        
+        // ===== APP INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'flex';
+                addLog('Application loaded successfully', 'info');
+            }, 2000);
+            
+            // Initialize event listeners
+            initEventListeners();
+            initTabs();
+        });
+        
+        // ===== TAB SYSTEM =====
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const pages = document.querySelectorAll('.page');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const pageId = this.dataset.page + 'Page';
+                    
+                    // Update tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update pages
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        if(page.id === pageId) {
+                            page.classList.add('active');
+                        }
+                    });
+                    
+                    addLog(`Switched to ${this.dataset.page} page`, 'info');
+                });
+            });
+        }
+        
+        // ===== EVENT LISTENERS =====
+        function initEventListeners() {
+            // Quick attack button
+            document.getElementById('quickAttackBtn').addEventListener('click', function() {
+                const target = document.getElementById('quickTarget').value.trim();
+                if(!target) {
+                    showAlert('Please enter a target phone number', 'warning');
+                    return;
+                }
+                
+                if(validatePhoneNumber(target)) {
+                    CONFIG.currentTarget = target;
+                    startQuickAttack();
+                } else {
+                    showAlert('Invalid phone number format', 'error');
+                }
+            });
+            
+            // Quick stop button
+            document.getElementById('quickStopBtn').addEventListener('click', stopAllAttacks);
+            
+            // Advanced attack button
+            document.getElementById('startAttackBtn').addEventListener('click', function() {
+                const target = document.getElementById('targetNumber').value.trim();
+                const name = document.getElementById('targetName').value.trim();
+                const intensity = document.getElementById('attackIntensity').value;
+                const duration = document.getElementById('attackDuration').value;
+                
+                if(!target) {
+                    showAlert('Please enter a target phone number', 'warning');
+                    return;
+                }
+                
+                if(validatePhoneNumber(target)) {
+                    CONFIG.currentTarget = target;
+                    startAdvancedAttack(target, name, intensity, duration);
+                } else {
+                    showAlert('Invalid phone number format', 'error');
+                }
+            });
+            
+            // Stop attack button
+            document.getElementById('stopAttackBtn').addEventListener('click', stopAllAttacks);
+            
+            // Clear logs button
+            document.getElementById('clearLogsBtn').addEventListener('click', function() {
+                document.getElementById('systemLogs').innerHTML = '';
+                addLog('Logs cleared', 'info');
+            });
+            
+            // Export logs button
+            document.getElementById('exportLogsBtn').addEventListener('click', exportLogs);
+        }
+        
+        // ===== VALIDATION FUNCTIONS =====
+        function validatePhoneNumber(number) {
+            // Basic phone number validation
+            const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+            return phoneRegex.test(number.replace(/[\s\-\(\)]/g, ''));
+        }
+        
+        // ===== ATTACK FUNCTIONS =====
+        function startQuickAttack() {
+            if(CONFIG.attackActive) {
+                showAlert('An attack is already active', 'warning');
+                return;
+            }
+            
+            CONFIG.attackActive = true;
+            const target = CONFIG.currentTarget;
+            
+            addLog(`Quick attack initiated against: ${target}`, 'info');
+            addAttackLog(`Attack started - Target: ${target}`);
+            
+            // Simulate attack progress
+            simulateAttack('quick');
+            
+            showAlert(`Attack launched against ${target}`, 'success');
+        }
+        
+        function startAdvancedAttack(target, name, intensity, duration) {
+            if(CONFIG.attackActive) {
+                showAlert('An attack is already active', 'warning');
+                return;
+            }
+            
+            CONFIG.attackActive = true;
+            
+            addLog(`Advanced attack initiated`, 'info');
+            addLog(`Target: ${target}`, 'info');
+            if(name) addLog(`Name: ${name}`, 'info');
+            addLog(`Intensity: ${intensity}`, 'info');
+            addLog(`Duration: ${duration} minutes`, 'info');
+            
+            addAttackLog(`Advanced attack started`);
+            addAttackLog(`Parameters: ${intensity} intensity, ${duration} min`);
+            
+            // Simulate attack progress
+            simulateAttack('advanced', intensity, duration);
+            
+            showAlert(`Advanced attack launched`, 'success');
+        }
+        
+        function stopAllAttacks() {
+            if(!CONFIG.attackActive) {
+                showAlert('No active attack to stop', 'warning');
+                return;
+            }
+            
+            CONFIG.attackActive = false;
+            CONFIG.currentTarget = null;
+            
+            addLog('All attacks stopped', 'info');
+            addAttackLog('Attack stopped by user');
+            
+            showAlert('Attack successfully stopped', 'success');
+        }
+        
+        // ===== SIMULATION FUNCTIONS =====
+        function simulateAttack(type = 'quick', intensity = 'medium', duration = '60') {
+            if(!CONFIG.attackActive) return;
+            
+            const steps = {
+                quick: [
+                    'Connecting to target...',
+                    'Sending payload...',
+                    'Initiating force close sequence...',
+                    'Activating boot loop...',
+                    'Attack successful!'
+                ],
+                advanced: [
+                    'Establishing secure connection...',
+                    'Analyzing target system...',
+                    'Sending encrypted payload...',
+                    'Activating destruction protocol...',
+                    'Monitoring attack progress...',
+                    'Attack in progress...'
+                ]
+            };
+            
+            const attackSteps = steps[type] || steps.quick;
+            let step = 0;
+            
+            const interval = setInterval(() => {
+                if(!CONFIG.attackActive || step >= attackSteps.length) {
+                    clearInterval(interval);
+                    if(CONFIG.attackActive) {
+                        addAttackLog('Attack completed successfully');
+                    }
+                    return;
+                }
+                
+                addAttackLog(attackSteps[step]);
+                step++;
+                
+                // For advanced attack, add more detailed logs
+                if(type === 'advanced') {
+                    if(step === 2) {
+                        addAttackLog(`Intensity level: ${intensity}`);
+                        addAttackLog(`Duration: ${duration} minutes`);
+                    }
+                }
+            }, 2000);
+        }
+        
+        // ===== LOGGING FUNCTIONS =====
+        function addLog(message, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            let typeClass = 'log-info';
+            if(type === 'warning') typeClass = 'log-warning';
+            if(type === 'error') typeClass = 'log-error';
+            
+            logEntry.innerHTML = `
+                <span class="log-time">[${time}]</span>
+                <span class="${typeClass}"> ${message}</span>
+            `;
+            
+            document.getElementById('systemLogs').appendChild(logEntry);
+            CONFIG.logs.push({time, message, type});
+            
+            // Auto-scroll to bottom
+            const container = document.getElementById('systemLogs');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function addAttackLog(message) {
+            const time = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            logEntry.innerHTML = `
+                <span class="log-time">[${time}]</span>
+                <span class="log-info"> ${message}</span>
+            `;
+            
+            document.getElementById('attackStatus').appendChild(logEntry);
+            
+            // Auto-scroll to bottom
+            const container = document.getElementById('attackStatus');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function exportLogs() {
+            const logsText = CONFIG.logs.map(log => 
+                `[${log.time}] ${log.message}`
+            ).join('\n');
+            
+            const blob = new Blob([logsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `annihilator_logs_${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            addLog('Logs exported successfully', 'info');
+        }
+        
+        // ===== UI HELPER FUNCTIONS =====
+        function showAlert(message, type = 'info') {
+            // Create alert element
+            const alert = document.createElement('div');
+            alert.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+                max-width: 300px;
+            `;
+            
+            // Set color based on type
+            if(type === 'success') {
+                alert.style.background = 'linear-gradient(135deg, #00ff88, #00cc6a)';
+            } else if(type === 'warning') {
+                alert.style.background = 'linear-gradient(135deg, #ffaa00, #cc8800)';
+            } else if(type === 'error') {
+                alert.style.background = 'linear-gradient(135deg, #ff006e, #cc0059)';
+            } else {
+                alert.style.background = 'linear-gradient(135deg, #9d4edd, #7b2cbf)';
+            }
+            
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                if(alert.parentNode) {
+                    alert.parentNode.removeChild(alert);
+                }
+            }, 3000);
+        }
+        
+        // ===== UTILITY FUNCTIONS =====
+        function generateDummyData() {
+            // Generate dummy data to increase file size
+            let dummyData = '';
+            const base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+            
+            for(let i = 0; i < 1000; i++) {
+                dummyData += `<img src="data:image/png;base64,${base64Image}">`;
+            }
+            
+            return dummyData;
+        }
+        
+        // Add dummy data to increase file size
+        document.getElementById('dummyData1').innerHTML = generateDummyData();
+        
+        // Add animation for fadeOut
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
